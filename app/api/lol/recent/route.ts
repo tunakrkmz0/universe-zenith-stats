@@ -1,11 +1,24 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 
 import { prisma } from "@/lib/prisma";
 import type { LolRecentPlayersResponse } from "@/types/lol-analysis";
 
+type RecentPlayerRecord = {
+  id: number;
+  riotGameName: string;
+  riotTagLine: string;
+  region: string;
+  puuid: string;
+  lastFetchedAt: Date | null;
+  updatedAt: Date;
+  _count: {
+    matchStats: number;
+  };
+};
+
 export async function GET() {
   try {
-    const players = await prisma.player.findMany({
+    const players = (await prisma.player.findMany({
       orderBy: {
         lastFetchedAt: "desc",
       },
@@ -24,10 +37,10 @@ export async function GET() {
           },
         },
       },
-    });
+    })) as RecentPlayerRecord[];
 
     const response: LolRecentPlayersResponse = {
-      players: players.map((player) => ({
+      players: players.map((player: RecentPlayerRecord) => ({
         id: player.id,
         gameName: player.riotGameName,
         tagLine: player.riotTagLine,
