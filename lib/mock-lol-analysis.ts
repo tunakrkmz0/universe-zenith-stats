@@ -1,0 +1,92 @@
+import type { LolAnalysisResponse } from "@/types/lol-analysis";
+
+export const mockLolAnalysisResponse: LolAnalysisResponse = {
+  player: {
+    gameName: "DemoPlayer",
+    tagLine: "TR1",
+    region: "tr1",
+    puuid: "mock-puuid-demo-player",
+  },
+  summary: {
+    matchCount: 10,
+    winRate: 60,
+    averageKda: 2.85,
+    averageCsPerMinute: 6.7,
+    averageVisionScore: 22,
+    averageDamageDealt: 24150,
+    averageGoldEarned: 11800,
+  },
+  matches: [
+    {
+      matchId: "TR1_100000001",
+      championName: "Ahri",
+      role: "MID",
+      win: true,
+      kills: 8,
+      deaths: 3,
+      assists: 11,
+      kda: 6.33,
+      totalCs: 214,
+      csPerMinute: 7.1,
+      visionScore: 19,
+      damageDealt: 26400,
+      goldEarned: 12600,
+      gameDurationSeconds: 1800,
+      queueId: 420,
+    },
+    {
+      matchId: "TR1_100000002",
+      championName: "Jinx",
+      role: "BOTTOM",
+      win: false,
+      kills: 5,
+      deaths: 7,
+      assists: 8,
+      kda: 1.86,
+      totalCs: 196,
+      csPerMinute: 6.4,
+      visionScore: 13,
+      damageDealt: 21800,
+      goldEarned: 10900,
+      gameDurationSeconds: 1840,
+      queueId: 420,
+    },
+    {
+      matchId: "TR1_100000003",
+      championName: "Lee Sin",
+      role: "JUNGLE",
+      win: true,
+      kills: 7,
+      deaths: 4,
+      assists: 14,
+      kda: 5.25,
+      totalCs: 156,
+      csPerMinute: 5.2,
+      visionScore: 31,
+      damageDealt: 18700,
+      goldEarned: 11650,
+      gameDurationSeconds: 1805,
+      queueId: 420,
+    },
+  ],
+  recommendations: [
+    {
+      type: "success",
+      title: "Takım savaşlarına katkın iyi",
+      description:
+        "Son maçlarda kill participation ve asist katkın güçlü görünüyor. Bu oyun tarzını koruyabilirsin.",
+    },
+    {
+      type: "warning",
+      title: "CS/dk geliştirilebilir",
+      description:
+        "Dakika başına minyon skorun orta seviyede. Laning sonrası yan koridor farm takibini artırman faydalı olur.",
+    },
+    {
+      type: "info",
+      title: "Vision kontrolünü rolüne göre takip et",
+      description:
+        "Support veya jungle oynadığında vision score değerini ayrı değerlendirmek daha doğru sonuç verir.",
+    },
+  ],
+};
