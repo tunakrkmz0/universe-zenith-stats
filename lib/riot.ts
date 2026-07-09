@@ -120,3 +120,16 @@ export async function getMatchIdsByPuuid(params: {
 
   return riotFetch<RiotMatchId[]>(url);
 }
+
+export async function getMatchDetailByMatchId(params: {
+  matchId: string;
+  region: LolRegion;
+}): Promise<unknown> {
+  const regionalRoutingValue = getRegionalRoutingValue(params.region);
+
+  const matchId = encodeURIComponent(params.matchId);
+
+  const url = `https://${regionalRoutingValue}.api.riotgames.com/lol/match/v5/matches/${matchId}`;
+
+  return riotFetch<unknown>(url);
+}
