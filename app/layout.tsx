@@ -37,6 +37,14 @@ export default function RootLayout({
                   Analiz
                 </Link>
 
+                <Link href="/privacy" className="transition hover:text-cyan-300">
+                  Gizlilik
+                </Link>
+
+                <Link href="/terms" className="transition hover:text-cyan-300">
+                  Şartlar
+                </Link>
+
                 <a
                   href="https://universezenith.com"
                   className="transition hover:text-cyan-300"
@@ -66,6 +74,15 @@ export default function RootLayout({
                 © {new Date().getFullYear()} Universe Zenith Stats. Tüm hakları
                 saklıdır.
               </p>
+            </div>
+            <div className="flex flex-wrap gap-4">
+              <Link href="/privacy" className="transition hover:text-cyan-300">
+                Gizlilik Politikası
+              </Link>
+
+              <Link href="/terms" className="transition hover:text-cyan-300">
+                Kullanım Şartları
+              </Link>
             </div>
           </footer>
         </div>
