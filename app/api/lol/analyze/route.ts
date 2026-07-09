@@ -2,11 +2,13 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { analyzeLolPlayer } from "@/lib/lol-analysis-service";
+import { saveLolAnalysisResult } from "@/lib/lol-analysis-repository";
 import { mockLolAnalysisResponse } from "@/lib/mock-lol-analysis";
 import { RiotServiceError } from "@/lib/riot";
 import type {
   LolAnalysisErrorResponse,
   LolAnalysisResponse,
+  LolRegion,
 } from "@/types/lol-analysis";
 
 const lolAnalysisRequestSchema = z.object({
@@ -28,6 +30,17 @@ function createErrorResponse(
   };
 
   return NextResponse.json(errorResponse, { status });
+}
+
+function createMockPuuid(params: {
+  gameName: string;
+  tagLine: string;
+  region: LolRegion;
+}) {
+  const gameName = params.gameName.trim().toLowerCase().replace(/\s+/g, "-");
+  const tagLine = params.tagLine.trim().toLowerCase().replace(/\s+/g, "-");
+
+  return `mock:${params.region}:${gameName}:${tagLine}`;
 }
 
 export async function GET() {
@@ -57,8 +70,15 @@ export async function POST(request: Request) {
           gameName,
           tagLine,
           region,
+          puuid: createMockPuuid({
+            gameName,
+            tagLine,
+            region,
+          }),
         },
       };
+
+      await saveLolAnalysisResult(response);
 
       return NextResponse.json(response, { status: 200 });
     }
@@ -68,6 +88,8 @@ export async function POST(request: Request) {
       tagLine,
       region,
     });
+
+    await saveLolAnalysisResult(response);
 
     return NextResponse.json(response, { status: 200 });
   } catch (error) {

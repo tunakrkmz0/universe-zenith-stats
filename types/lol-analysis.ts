@@ -41,6 +41,7 @@ export type LolAnalysisMatch = {
   damageDealt: number;
   goldEarned: number;
 
+  gameCreation: string;
   gameDurationSeconds: number;
   queueId: number;
 };

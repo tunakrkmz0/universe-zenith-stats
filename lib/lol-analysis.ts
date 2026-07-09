@@ -37,6 +37,7 @@ export type RiotMatchLike = {
     matchId: string;
   };
   info: {
+    gameCreation?: number;
     gameDuration: number;
     queueId: number;
     participants: RiotParticipantLike[];
@@ -48,7 +49,11 @@ function roundToTwo(value: number): number {
   return Math.round(value * 100) / 100;
 }
 
-export function calculateKda(kills: number, deaths: number, assists: number): number {
+export function calculateKda(
+  kills: number,
+  deaths: number,
+  assists: number
+): number {
   if (deaths === 0) {
     return roundToTwo(kills + assists);
   }
@@ -87,10 +92,7 @@ export function mapRiotMatchToAnalysisMatch(params: {
   return {
     matchId: params.match.metadata.matchId,
     championName: participant.championName,
-    role:
-      participant.teamPosition ||
-      participant.individualPosition ||
-      null,
+    role: participant.teamPosition || participant.individualPosition || null,
     win: participant.win,
 
     kills: participant.kills,
@@ -112,6 +114,9 @@ export function mapRiotMatchToAnalysisMatch(params: {
     damageDealt: participant.totalDamageDealtToChampions,
     goldEarned: participant.goldEarned,
 
+    gameCreation: new Date(
+      params.match.info.gameCreation ?? Date.now()
+    ).toISOString(),
     gameDurationSeconds: params.match.info.gameDuration,
     queueId: params.match.info.queueId,
   };

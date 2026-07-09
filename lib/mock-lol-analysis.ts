@@ -8,12 +8,15 @@ import {
 
 const mockPlayerPuuid = "mock-puuid-demo-player";
 
+const oneDayMs = 1000 * 60 * 60 * 24;
+
 const mockRiotMatches: RiotMatchLike[] = [
   {
     metadata: {
       matchId: "TR1_100000001",
     },
     info: {
+      gameCreation: Date.now() - oneDayMs,
       gameDuration: 1800,
       queueId: 420,
       participants: [
@@ -40,6 +43,7 @@ const mockRiotMatches: RiotMatchLike[] = [
       matchId: "TR1_100000002",
     },
     info: {
+      gameCreation: Date.now() - oneDayMs * 2,
       gameDuration: 1840,
       queueId: 420,
       participants: [
@@ -66,6 +70,7 @@ const mockRiotMatches: RiotMatchLike[] = [
       matchId: "TR1_100000003",
     },
     info: {
+      gameCreation: Date.now() - oneDayMs * 3,
       gameDuration: 1805,
       queueId: 420,
       participants: [
