@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Player {
+  id            Int       @id @default(autoincrement())
+  riotGameName  String
+  riotTagLine   String
+  puuid         String    @unique
+  region        String    @default("tr1")
+  lastFetchedAt DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  matchStats PlayerMatchStat[]
+
+  @@index([riotGameName, riotTagLine])
+}
+
+model Match {
+  id                  Int      @id @default(autoincrement())
+  riotMatchId         String   @unique
+  gameCreation        DateTime
+  gameDurationSeconds Int
+  queueId             Int
+  rawJson             Json
+  createdAt           DateTime @default(now())
+
+  playerStats PlayerMatchStat[]
+}
+
+model PlayerMatchStat {
+  id Int @id @default(autoincrement())
+
+  playerId Int
+  matchId  Int
+
+  championName String
+  role         String?
+  win          Boolean
+
+  kills   Int
+  deaths  Int
+  assists Int
+
+  totalCs     Int
+  csPerMinute Decimal @db.Decimal(5, 2)
+
+  visionScore Int
+  damageDealt Int
+  goldEarned  Int
+
+  killParticipation Decimal? @db.Decimal(5, 2)
+  kda               Decimal  @db.Decimal(5, 2)
+
+  createdAt DateTime @default(now())
+
+  player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  match  Match  @relation(fields: [matchId], references: [id], onDelete: Cascade)
+
+  @@unique([playerId, matchId])
+  @@index([championName])
+  @@index([role])
+}
+
+model Article {
+  id              Int       @id @default(autoincrement())
+  title           String
+  slug            String    @unique
+  category        String
+  excerpt         String?
+  content         String
+  metaDescription String?
+  publishedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([category])
+  @@index([publishedAt])
+}
