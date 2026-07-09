@@ -1,20 +1,34 @@
 import { NextResponse } from "next/server";
-import type { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
 import type { LolPlayerDetailResponse } from "@/types/lol-analysis";
 
-type PlayerWithMatchStats = Prisma.PlayerGetPayload<{
-  include: {
-    matchStats: {
-      include: {
-        match: true;
-      };
-    };
-  };
-}>;
+type PlayerMatchStatWithMatch = {
+  id: number;
+  championName: string;
+  role: string | null;
+  win: boolean;
 
-type PlayerMatchStatWithMatch = PlayerWithMatchStats["matchStats"][number];
+  kills: number;
+  deaths: number;
+  assists: number;
+
+  totalCs: number;
+  csPerMinute: unknown;
+  visionScore: number;
+  damageDealt: number;
+  goldEarned: number;
+  kda: unknown;
+
+  createdAt: Date;
+
+  match: {
+    riotMatchId: string;
+    gameCreation: Date;
+    gameDurationSeconds: number;
+    queueId: number;
+  };
+};
 
 function roundToTwo(value: number): number {
   return Math.round(value * 100) / 100;
@@ -40,7 +54,7 @@ export async function GET(
       );
     }
 
-    const player = (await prisma.player.findUnique({
+    const player = await prisma.player.findUnique({
       where: {
         id: playerId,
       },
@@ -54,7 +68,7 @@ export async function GET(
           },
         },
       },
-    })) as PlayerWithMatchStats | null;
+    });
 
     if (!player) {
       return NextResponse.json(
@@ -68,8 +82,9 @@ export async function GET(
       );
     }
 
-    const matchStats: PlayerMatchStatWithMatch[] = player.matchStats;
+    const matchStats = player.matchStats as PlayerMatchStatWithMatch[];
     const matchCount = matchStats.length;
+
     const winCount = matchStats.filter(
       (stat: PlayerMatchStatWithMatch) => stat.win
     ).length;
