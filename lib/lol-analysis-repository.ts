@@ -17,102 +17,100 @@ function createJsonPayload(value: unknown) {
 export async function saveLolAnalysisResult(analysis: LolAnalysisResponse) {
   const playerPuuid = analysis.player.puuid ?? createFallbackPuuid(analysis);
 
-  return prisma.$transaction(async (tx) => {
-    const player = await tx.player.upsert({
+  const player = await prisma.player.upsert({
+    where: {
+      puuid: playerPuuid,
+    },
+    update: {
+      riotGameName: analysis.player.gameName,
+      riotTagLine: analysis.player.tagLine,
+      region: analysis.player.region,
+      lastFetchedAt: new Date(),
+    },
+    create: {
+      riotGameName: analysis.player.gameName,
+      riotTagLine: analysis.player.tagLine,
+      puuid: playerPuuid,
+      region: analysis.player.region,
+      lastFetchedAt: new Date(),
+    },
+  });
+
+  for (const analyzedMatch of analysis.matches) {
+    const rawJson = createJsonPayload(analyzedMatch);
+
+    const match = await prisma.match.upsert({
       where: {
-        puuid: playerPuuid,
+        riotMatchId: analyzedMatch.matchId,
       },
       update: {
-        riotGameName: analysis.player.gameName,
-        riotTagLine: analysis.player.tagLine,
-        region: analysis.player.region,
-        lastFetchedAt: new Date(),
+        gameCreation: new Date(analyzedMatch.gameCreation),
+        gameDurationSeconds: analyzedMatch.gameDurationSeconds,
+        queueId: analyzedMatch.queueId,
+        rawJson,
       },
       create: {
-        riotGameName: analysis.player.gameName,
-        riotTagLine: analysis.player.tagLine,
-        puuid: playerPuuid,
-        region: analysis.player.region,
-        lastFetchedAt: new Date(),
+        riotMatchId: analyzedMatch.matchId,
+        gameCreation: new Date(analyzedMatch.gameCreation),
+        gameDurationSeconds: analyzedMatch.gameDurationSeconds,
+        queueId: analyzedMatch.queueId,
+        rawJson,
       },
     });
 
-    for (const analyzedMatch of analysis.matches) {
-      const rawJson = createJsonPayload(analyzedMatch);
-
-      const match = await tx.match.upsert({
-        where: {
-          riotMatchId: analyzedMatch.matchId,
-        },
-        update: {
-          gameCreation: new Date(analyzedMatch.gameCreation),
-          gameDurationSeconds: analyzedMatch.gameDurationSeconds,
-          queueId: analyzedMatch.queueId,
-          rawJson,
-        },
-        create: {
-          riotMatchId: analyzedMatch.matchId,
-          gameCreation: new Date(analyzedMatch.gameCreation),
-          gameDurationSeconds: analyzedMatch.gameDurationSeconds,
-          queueId: analyzedMatch.queueId,
-          rawJson,
-        },
-      });
-
-      await tx.playerMatchStat.upsert({
-        where: {
-          playerId_matchId: {
-            playerId: player.id,
-            matchId: match.id,
-          },
-        },
-        update: {
-          championName: analyzedMatch.championName,
-          role: analyzedMatch.role,
-          win: analyzedMatch.win,
-
-          kills: analyzedMatch.kills,
-          deaths: analyzedMatch.deaths,
-          assists: analyzedMatch.assists,
-
-          totalCs: analyzedMatch.totalCs,
-          csPerMinute: analyzedMatch.csPerMinute,
-
-          visionScore: analyzedMatch.visionScore,
-          damageDealt: analyzedMatch.damageDealt,
-          goldEarned: analyzedMatch.goldEarned,
-
-          killParticipation: null,
-          kda: analyzedMatch.kda,
-        },
-        create: {
+    await prisma.playerMatchStat.upsert({
+      where: {
+        playerId_matchId: {
           playerId: player.id,
           matchId: match.id,
-
-          championName: analyzedMatch.championName,
-          role: analyzedMatch.role,
-          win: analyzedMatch.win,
-
-          kills: analyzedMatch.kills,
-          deaths: analyzedMatch.deaths,
-          assists: analyzedMatch.assists,
-
-          totalCs: analyzedMatch.totalCs,
-          csPerMinute: analyzedMatch.csPerMinute,
-
-          visionScore: analyzedMatch.visionScore,
-          damageDealt: analyzedMatch.damageDealt,
-          goldEarned: analyzedMatch.goldEarned,
-
-          killParticipation: null,
-          kda: analyzedMatch.kda,
         },
-      });
-    }
+      },
+      update: {
+        championName: analyzedMatch.championName,
+        role: analyzedMatch.role,
+        win: analyzedMatch.win,
 
-    return {
-      playerId: player.id,
-      savedMatchCount: analysis.matches.length,
-    };
-  });
+        kills: analyzedMatch.kills,
+        deaths: analyzedMatch.deaths,
+        assists: analyzedMatch.assists,
+
+        totalCs: analyzedMatch.totalCs,
+        csPerMinute: analyzedMatch.csPerMinute,
+
+        visionScore: analyzedMatch.visionScore,
+        damageDealt: analyzedMatch.damageDealt,
+        goldEarned: analyzedMatch.goldEarned,
+
+        killParticipation: null,
+        kda: analyzedMatch.kda,
+      },
+      create: {
+        playerId: player.id,
+        matchId: match.id,
+
+        championName: analyzedMatch.championName,
+        role: analyzedMatch.role,
+        win: analyzedMatch.win,
+
+        kills: analyzedMatch.kills,
+        deaths: analyzedMatch.deaths,
+        assists: analyzedMatch.assists,
+
+        totalCs: analyzedMatch.totalCs,
+        csPerMinute: analyzedMatch.csPerMinute,
+
+        visionScore: analyzedMatch.visionScore,
+        damageDealt: analyzedMatch.damageDealt,
+        goldEarned: analyzedMatch.goldEarned,
+
+        killParticipation: null,
+        kda: analyzedMatch.kda,
+      },
+    });
+  }
+
+  return {
+    playerId: player.id,
+    savedMatchCount: analysis.matches.length,
+  };
 }
