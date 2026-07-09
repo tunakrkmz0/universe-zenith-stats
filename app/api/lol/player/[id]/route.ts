@@ -1,7 +1,20 @@
 import { NextResponse } from "next/server";
+import type { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
 import type { LolPlayerDetailResponse } from "@/types/lol-analysis";
+
+type PlayerWithMatchStats = Prisma.PlayerGetPayload<{
+  include: {
+    matchStats: {
+      include: {
+        match: true;
+      };
+    };
+  };
+}>;
+
+type PlayerMatchStatWithMatch = PlayerWithMatchStats["matchStats"][number];
 
 function roundToTwo(value: number): number {
   return Math.round(value * 100) / 100;
@@ -27,7 +40,7 @@ export async function GET(
       );
     }
 
-    const player = await prisma.player.findUnique({
+    const player = (await prisma.player.findUnique({
       where: {
         id: playerId,
       },
@@ -41,7 +54,7 @@ export async function GET(
           },
         },
       },
-    });
+    })) as PlayerWithMatchStats | null;
 
     if (!player) {
       return NextResponse.json(
@@ -55,16 +68,21 @@ export async function GET(
       );
     }
 
-    const matchStats = player.matchStats;
+    const matchStats: PlayerMatchStatWithMatch[] = player.matchStats;
     const matchCount = matchStats.length;
-    const winCount = matchStats.filter((stat) => stat.win).length;
+    const winCount = matchStats.filter(
+      (stat: PlayerMatchStatWithMatch) => stat.win
+    ).length;
 
     const averageKda =
       matchCount === 0
         ? 0
         : roundToTwo(
-            matchStats.reduce((sum, stat) => sum + Number(stat.kda), 0) /
-              matchCount
+            matchStats.reduce(
+              (sum: number, stat: PlayerMatchStatWithMatch) =>
+                sum + Number(stat.kda),
+              0
+            ) / matchCount
           );
 
     const averageCsPerMinute =
@@ -72,7 +90,8 @@ export async function GET(
         ? 0
         : roundToTwo(
             matchStats.reduce(
-              (sum, stat) => sum + Number(stat.csPerMinute),
+              (sum: number, stat: PlayerMatchStatWithMatch) =>
+                sum + Number(stat.csPerMinute),
               0
             ) / matchCount
           );
@@ -81,24 +100,33 @@ export async function GET(
       matchCount === 0
         ? 0
         : roundToTwo(
-            matchStats.reduce((sum, stat) => sum + stat.visionScore, 0) /
-              matchCount
+            matchStats.reduce(
+              (sum: number, stat: PlayerMatchStatWithMatch) =>
+                sum + stat.visionScore,
+              0
+            ) / matchCount
           );
 
     const averageDamageDealt =
       matchCount === 0
         ? 0
         : roundToTwo(
-            matchStats.reduce((sum, stat) => sum + stat.damageDealt, 0) /
-              matchCount
+            matchStats.reduce(
+              (sum: number, stat: PlayerMatchStatWithMatch) =>
+                sum + stat.damageDealt,
+              0
+            ) / matchCount
           );
 
     const averageGoldEarned =
       matchCount === 0
         ? 0
         : roundToTwo(
-            matchStats.reduce((sum, stat) => sum + stat.goldEarned, 0) /
-              matchCount
+            matchStats.reduce(
+              (sum: number, stat: PlayerMatchStatWithMatch) =>
+                sum + stat.goldEarned,
+              0
+            ) / matchCount
           );
 
     const response: LolPlayerDetailResponse = {
@@ -122,7 +150,7 @@ export async function GET(
         averageDamageDealt,
         averageGoldEarned,
       },
-      matches: matchStats.map((stat) => ({
+      matches: matchStats.map((stat: PlayerMatchStatWithMatch) => ({
         id: stat.id,
         matchId: stat.match.riotMatchId,
         championName: stat.championName,
