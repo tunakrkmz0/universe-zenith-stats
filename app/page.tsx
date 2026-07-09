@@ -59,7 +59,7 @@ export default function HomePage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100">
+    <main className="text-slate-100">
       <section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-10">
         <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-8 shadow-2xl">
           <div className="mb-8">
