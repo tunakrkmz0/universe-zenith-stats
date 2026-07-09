@@ -1,5 +1,4 @@
-import type { Prisma } from "@prisma/client";
-import type { LolAnalysisResponse } from "@/types/lol-analysis";
+﻿import type { LolAnalysisResponse } from "@/types/lol-analysis";
 
 import { prisma } from "@/lib/prisma";
 
@@ -9,6 +8,10 @@ function createFallbackPuuid(analysis: LolAnalysisResponse): string {
   const region = analysis.player.region;
 
   return `mock:${region}:${gameName}:${tagLine}`;
+}
+
+function createJsonPayload(value: unknown) {
+  return JSON.parse(JSON.stringify(value));
 }
 
 export async function saveLolAnalysisResult(analysis: LolAnalysisResponse) {
@@ -35,7 +38,7 @@ export async function saveLolAnalysisResult(analysis: LolAnalysisResponse) {
     });
 
     for (const analyzedMatch of analysis.matches) {
-      const rawJson = analyzedMatch as unknown as Prisma.InputJsonValue;
+      const rawJson = createJsonPayload(analyzedMatch);
 
       const match = await tx.match.upsert({
         where: {
