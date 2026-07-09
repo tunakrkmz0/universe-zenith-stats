@@ -12,6 +12,8 @@ import type {
   LolRegion,
 } from "@/types/lol-analysis";
 
+import { RecentPlayersPanel } from "@/components/lol/recent-players-panel";
+
 const regions: { label: string; value: LolRegion }[] = [
   { label: "Türkiye", value: "tr1" },
   { label: "EU West", value: "euw1" },
@@ -28,6 +30,7 @@ export default function HomePage() {
   const [data, setData] = useState<LolAnalysisResponse | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [recentRefreshKey, setRecentRefreshKey] = useState(0);
 
   async function handleAnalyze() {
     setErrorMessage("");
@@ -43,6 +46,7 @@ export default function HomePage() {
 
       const result = await analyzeLolPlayer(request);
       setData(result);
+      setRecentRefreshKey((value) => value + 1);
     } catch (error) {
       if (error instanceof LolApiClientError) {
         setErrorMessage(error.message);
@@ -72,6 +76,7 @@ export default function HomePage() {
               vision score, damage, gold ve winrate değerlerini tek ekranda gör.
             </p>
           </div>
+          
 
           <div className="grid gap-4 md:grid-cols-[1fr_1fr_180px_160px]">
             <div>
@@ -133,6 +138,8 @@ export default function HomePage() {
             </div>
           )}
         </div>
+
+        <RecentPlayersPanel refreshKey={recentRefreshKey} />
 
         {!data && !isLoading && (
           <div className="rounded-3xl border border-slate-800 bg-slate-900/50 p-8 text-slate-400">
