@@ -3,10 +3,49 @@ import Link from "next/link";
 
 import "./globals.css";
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+
 export const metadata: Metadata = {
-  title: "Universe Zenith Stats",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Universe Zenith Stats",
+    template: "%s | Universe Zenith Stats",
+  },
   description:
-    "League of Legends oyuncu istatistikleri ve performans analiz platformu.",
+    "League of Legends oyuncu istatistikleri, maç geçmişi ve performans analiz platformu.",
+  applicationName: "Universe Zenith Stats",
+  keywords: [
+    "League of Legends",
+    "LoL stats",
+    "LoL player analysis",
+    "Riot ID analysis",
+    "Universe Zenith Stats",
+  ],
+  authors: [
+    {
+      name: "Universe Zenith",
+    },
+  ],
+  openGraph: {
+    title: "Universe Zenith Stats",
+    description:
+      "League of Legends oyuncu istatistikleri, maç geçmişi ve performans analiz platformu.",
+    url: siteUrl,
+    siteName: "Universe Zenith Stats",
+    locale: "tr_TR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Universe Zenith Stats",
+    description:
+      "League of Legends oyuncu istatistikleri, maç geçmişi ve performans analiz platformu.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
