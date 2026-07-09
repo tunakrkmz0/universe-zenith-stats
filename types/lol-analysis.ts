@@ -70,3 +70,60 @@ export type LolAnalysisErrorResponse = {
     message: string;
   };
 };
+
+export type LolRecentPlayer = {
+  id: number;
+  gameName: string;
+  tagLine: string;
+  region: string;
+  puuid: string;
+  analyzedMatchCount: number;
+  lastFetchedAt: string | Date | null;
+  updatedAt: string | Date;
+};
+
+export type LolRecentPlayersResponse = {
+  players: LolRecentPlayer[];
+};
+
+export type LolPlayerDetailPlayer = {
+  id: number;
+  gameName: string;
+  tagLine: string;
+  region: string;
+  puuid: string;
+  lastFetchedAt: string | Date | null;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+};
+
+export type LolPlayerDetailMatch = {
+  id: number;
+  matchId: string;
+  championName: string;
+  role: string | null;
+  win: boolean;
+
+  kills: number;
+  deaths: number;
+  assists: number;
+
+  kda: number;
+  totalCs: number;
+  csPerMinute: number;
+
+  visionScore: number;
+  damageDealt: number;
+  goldEarned: number;
+
+  gameCreation: string | Date;
+  gameDurationSeconds: number;
+  queueId: number;
+  createdAt: string | Date;
+};
+
+export type LolPlayerDetailResponse = {
+  player: LolPlayerDetailPlayer;
+  summary: LolAnalysisSummary;
+  matches: LolPlayerDetailMatch[];
+};

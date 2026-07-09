@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { prisma } from "@/lib/prisma";
+import type { LolPlayerDetailResponse } from "@/types/lol-analysis";
 
 function roundToTwo(value: number): number {
   return Math.round(value * 100) / 100;
@@ -56,7 +57,6 @@ export async function GET(
 
     const matchStats = player.matchStats;
     const matchCount = matchStats.length;
-
     const winCount = matchStats.filter((stat) => stat.win).length;
 
     const averageKda =
@@ -101,55 +101,54 @@ export async function GET(
               matchCount
           );
 
-    return NextResponse.json(
-      {
-        player: {
-          id: player.id,
-          gameName: player.riotGameName,
-          tagLine: player.riotTagLine,
-          region: player.region,
-          puuid: player.puuid,
-          lastFetchedAt: player.lastFetchedAt,
-          createdAt: player.createdAt,
-          updatedAt: player.updatedAt,
-        },
-        summary: {
-          matchCount,
-          winRate:
-            matchCount === 0 ? 0 : roundToTwo((winCount / matchCount) * 100),
-          averageKda,
-          averageCsPerMinute,
-          averageVisionScore,
-          averageDamageDealt,
-          averageGoldEarned,
-        },
-        matches: matchStats.map((stat) => ({
-          id: stat.id,
-          matchId: stat.match.riotMatchId,
-          championName: stat.championName,
-          role: stat.role,
-          win: stat.win,
-
-          kills: stat.kills,
-          deaths: stat.deaths,
-          assists: stat.assists,
-
-          kda: Number(stat.kda),
-          totalCs: stat.totalCs,
-          csPerMinute: Number(stat.csPerMinute),
-
-          visionScore: stat.visionScore,
-          damageDealt: stat.damageDealt,
-          goldEarned: stat.goldEarned,
-
-          gameCreation: stat.match.gameCreation,
-          gameDurationSeconds: stat.match.gameDurationSeconds,
-          queueId: stat.match.queueId,
-          createdAt: stat.createdAt,
-        })),
+    const response: LolPlayerDetailResponse = {
+      player: {
+        id: player.id,
+        gameName: player.riotGameName,
+        tagLine: player.riotTagLine,
+        region: player.region,
+        puuid: player.puuid,
+        lastFetchedAt: player.lastFetchedAt,
+        createdAt: player.createdAt,
+        updatedAt: player.updatedAt,
       },
-      { status: 200 }
-    );
+      summary: {
+        matchCount,
+        winRate:
+          matchCount === 0 ? 0 : roundToTwo((winCount / matchCount) * 100),
+        averageKda,
+        averageCsPerMinute,
+        averageVisionScore,
+        averageDamageDealt,
+        averageGoldEarned,
+      },
+      matches: matchStats.map((stat) => ({
+        id: stat.id,
+        matchId: stat.match.riotMatchId,
+        championName: stat.championName,
+        role: stat.role,
+        win: stat.win,
+
+        kills: stat.kills,
+        deaths: stat.deaths,
+        assists: stat.assists,
+
+        kda: Number(stat.kda),
+        totalCs: stat.totalCs,
+        csPerMinute: Number(stat.csPerMinute),
+
+        visionScore: stat.visionScore,
+        damageDealt: stat.damageDealt,
+        goldEarned: stat.goldEarned,
+
+        gameCreation: stat.match.gameCreation,
+        gameDurationSeconds: stat.match.gameDurationSeconds,
+        queueId: stat.match.queueId,
+        createdAt: stat.createdAt,
+      })),
+    };
+
+    return NextResponse.json(response, { status: 200 });
   } catch (error) {
     console.error("LOL_PLAYER_DETAIL_ERROR:", error);
 

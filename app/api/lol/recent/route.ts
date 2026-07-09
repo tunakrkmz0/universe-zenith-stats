@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { prisma } from "@/lib/prisma";
+import type { LolRecentPlayersResponse } from "@/types/lol-analysis";
 
 export async function GET() {
   try {
@@ -25,21 +26,20 @@ export async function GET() {
       },
     });
 
-    return NextResponse.json(
-      {
-        players: players.map((player) => ({
-          id: player.id,
-          gameName: player.riotGameName,
-          tagLine: player.riotTagLine,
-          region: player.region,
-          puuid: player.puuid,
-          analyzedMatchCount: player._count.matchStats,
-          lastFetchedAt: player.lastFetchedAt,
-          updatedAt: player.updatedAt,
-        })),
-      },
-      { status: 200 }
-    );
+    const response: LolRecentPlayersResponse = {
+      players: players.map((player) => ({
+        id: player.id,
+        gameName: player.riotGameName,
+        tagLine: player.riotTagLine,
+        region: player.region,
+        puuid: player.puuid,
+        analyzedMatchCount: player._count.matchStats,
+        lastFetchedAt: player.lastFetchedAt,
+        updatedAt: player.updatedAt,
+      })),
+    };
+
+    return NextResponse.json(response, { status: 200 });
   } catch (error) {
     console.error("LOL_RECENT_PLAYERS_ERROR:", error);
 
