@@ -18,11 +18,27 @@ export class LolApiClientError extends Error {
   }
 }
 
+function isLolAnalysisErrorResponse(
+  data: unknown
+): data is LolAnalysisErrorResponse {
+  return (
+    typeof data === "object" &&
+    data !== null &&
+    "error" in data &&
+    typeof data.error === "object" &&
+    data.error !== null &&
+    "code" in data.error &&
+    "message" in data.error &&
+    typeof data.error.code === "string" &&
+    typeof data.error.message === "string"
+  );
+}
+
 async function parseApiResponse<T>(response: Response): Promise<T> {
-  const data = (await response.json()) as T | LolAnalysisErrorResponse;
+  const data: unknown = await response.json();
 
   if (!response.ok) {
-    if ("error" in data) {
+    if (isLolAnalysisErrorResponse(data)) {
       throw new LolApiClientError({
         message: data.error.message,
         status: response.status,
