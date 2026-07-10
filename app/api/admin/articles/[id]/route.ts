@@ -261,3 +261,86 @@ export async function PUT(
     );
   }
 }
+
+
+
+export async function DELETE(
+  request: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  try {
+    if (!isAdminRequest(request)) {
+      return NextResponse.json(
+        {
+          error: {
+            code: "UNAUTHORIZED",
+            message: "Admin yetkisi gerekli.",
+          },
+        },
+        { status: 401 }
+      );
+    }
+
+    const { id } = await context.params;
+    const articleId = Number(id);
+
+    if (!Number.isInteger(articleId) || articleId <= 0) {
+      return NextResponse.json(
+        {
+          error: {
+            code: "VALIDATION_ERROR",
+            message: "Geçersiz yazı ID değeri.",
+          },
+        },
+        { status: 400 }
+      );
+    }
+
+    const existingArticle = await prisma.article.findUnique({
+      where: {
+        id: articleId,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (!existingArticle) {
+      return NextResponse.json(
+        {
+          error: {
+            code: "ARTICLE_NOT_FOUND",
+            message: "Yazı bulunamadı.",
+          },
+        },
+        { status: 404 }
+      );
+    }
+
+    await prisma.article.delete({
+      where: {
+        id: articleId,
+      },
+    });
+
+    return NextResponse.json(
+      {
+        deleted: true,
+        id: articleId,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("ADMIN_ARTICLE_DELETE_ERROR:", error);
+
+    return NextResponse.json(
+      {
+        error: {
+          code: "INTERNAL_ERROR",
+          message: "Yazı silinirken hata oluştu.",
+        },
+      },
+      { status: 500 }
+    );
+  }
+}

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import {
   AdminArticleApiError,
+  deleteAdminArticle,
   getAdminArticles,
 } from "@/lib/admin-article-api-client";
 import type { ArticleListItem } from "@/types/article";
@@ -37,6 +38,9 @@ function getCategoryLabel(category: string): string {
 export default function AdminArticlesPage() {
   const [articles, setArticles] = useState<ArticleListItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [deletingArticleId, setDeletingArticleId] = useState<number | null>(
+    null
+  );
   const [errorMessage, setErrorMessage] = useState("");
 
   async function loadArticles() {
@@ -61,6 +65,45 @@ export default function AdminArticlesPage() {
       }
     } finally {
       setIsLoading(false);
+    }
+  }
+
+  async function handleDeleteArticle(article: ArticleListItem) {
+    const confirmed = window.confirm(
+      `"${article.title}" yazısını kalıcı olarak silmek istediğine emin misin?`
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    setDeletingArticleId(article.id);
+    setErrorMessage("");
+
+    try {
+      const adminPassword = localStorage.getItem(ADMIN_PASSWORD_STORAGE_KEY);
+
+      if (!adminPassword) {
+        setErrorMessage("Admin şifresi bulunamadı. Önce giriş yap.");
+        return;
+      }
+
+      await deleteAdminArticle({
+        adminPassword,
+        articleId: article.id,
+      });
+
+      setArticles((currentArticles) =>
+        currentArticles.filter((item) => item.id !== article.id)
+      );
+    } catch (error) {
+      if (error instanceof AdminArticleApiError) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage("Yazı silinemedi.");
+      }
+    } finally {
+      setDeletingArticleId(null);
     }
   }
 
@@ -171,6 +214,15 @@ export default function AdminArticlesPage() {
                         Sitede Gör
                       </Link>
                     )}
+
+                    <button
+                      type="button"
+                      onClick={() => void handleDeleteArticle(article)}
+                      disabled={deletingArticleId === article.id}
+                      className="rounded-xl border border-red-500/60 px-4 py-3 text-sm font-semibold text-red-300 transition hover:bg-red-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {deletingArticleId === article.id ? "Siliniyor..." : "Sil"}
+                    </button>
                   </div>
                 </div>
               </div>

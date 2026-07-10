@@ -127,3 +127,22 @@ export async function updateAdminArticle(params: {
 
   return parseResponse<ArticleDetailResponse>(response);
 }
+
+export type DeleteArticleResponse = {
+  deleted: boolean;
+  id: number;
+};
+
+export async function deleteAdminArticle(params: {
+  adminPassword: string;
+  articleId: number;
+}): Promise<DeleteArticleResponse> {
+  const response = await fetch(`/api/admin/articles/${params.articleId}`, {
+    method: "DELETE",
+    headers: {
+      "x-admin-password": params.adminPassword,
+    },
+  });
+
+  return parseResponse<DeleteArticleResponse>(response);
+}
