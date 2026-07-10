@@ -121,57 +121,60 @@ export default function AdminArticlesPage() {
         )}
 
         {!isLoading && !errorMessage && articles.length > 0 && (
-          <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-6">
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[800px] text-left text-sm">
-                <thead className="border-b border-slate-800 text-slate-500">
-                  <tr>
-                    <th className="px-4 py-3">Başlık</th>
-                    <th className="px-4 py-3">Kategori</th>
-                    <th className="px-4 py-3">Durum</th>
-                    <th className="px-4 py-3">Slug</th>
-                    <th className="px-4 py-3">Yayın</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {articles.map((article) => (
-                    <tr
-                      key={article.id}
-                      className="border-b border-slate-800 last:border-0"
-                    >
-                      <td className="px-4 py-4 font-medium text-slate-100">
-                        {article.title}
-                      </td>
-
-                      <td className="px-4 py-4 text-slate-400">
+          <div className="grid gap-4">
+            {articles.map((article) => (
+              <div
+                key={article.id}
+                className="rounded-3xl border border-slate-800 bg-slate-900/70 p-6"
+              >
+                <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
+                  <div>
+                    <div className="mb-3 flex flex-wrap items-center gap-2">
+                      <span className="rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-300">
                         {getCategoryLabel(article.category)}
-                      </td>
+                      </span>
 
-                      <td className="px-4 py-4">
-                        <span
-                          className={
-                            article.status === "published"
-                              ? "rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300"
-                              : "rounded-full bg-slate-700 px-3 py-1 text-xs font-semibold text-slate-300"
-                          }
-                        >
-                          {article.status}
-                        </span>
-                      </td>
+                      <span
+                        className={
+                          article.status === "published"
+                            ? "rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300"
+                            : "rounded-full bg-slate-700 px-3 py-1 text-xs font-semibold text-slate-300"
+                        }
+                      >
+                        {article.status === "published" ? "Yayında" : "Taslak"}
+                      </span>
+                    </div>
 
-                      <td className="px-4 py-4 text-slate-500">
-                        {article.slug}
-                      </td>
+                    <h2 className="text-2xl font-bold text-slate-100">
+                      {article.title}
+                    </h2>
 
-                      <td className="px-4 py-4 text-slate-500">
-                        {formatDate(article.publishedAt)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                    <div className="mt-3 flex flex-col gap-1 text-sm text-slate-500">
+                      <p>Slug: {article.slug}</p>
+                      <p>Yayın tarihi: {formatDate(article.publishedAt)}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-3">
+                    <Link
+                      href={`/admin/articles/${article.id}/edit`}
+                      className="rounded-xl border border-cyan-400/60 px-4 py-3 text-sm font-semibold text-cyan-300 transition hover:bg-cyan-400 hover:text-slate-950"
+                    >
+                      Düzenle
+                    </Link>
+
+                    {article.status === "published" && (
+                      <Link
+                        href={`/guides/${article.slug}`}
+                        className="rounded-xl border border-slate-700 px-4 py-3 text-sm font-semibold text-slate-300 transition hover:border-cyan-400 hover:text-cyan-300"
+                      >
+                        Sitede Gör
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </section>

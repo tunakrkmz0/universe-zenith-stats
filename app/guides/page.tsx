@@ -95,6 +95,14 @@ export default async function GuidesPage() {
                   </span>
                 </div>
 
+                {article.coverImageUrl && (
+                  <img
+                    src={article.coverImageUrl}
+                    alt={article.title}
+                    className="mb-5 h-44 w-full rounded-2xl border border-slate-800 object-cover"
+                  />
+                )}
+
                 <h2 className="text-2xl font-bold transition group-hover:text-cyan-300">
                   {article.title}
                 </h2>

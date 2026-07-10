@@ -110,6 +110,14 @@ export default async function GuideDetailPage({
           )}
         </header>
 
+        {article.coverImageUrl && (
+          <img
+            src={article.coverImageUrl}
+            alt={article.title}
+            className="max-h-[420px] w-full rounded-3xl border border-slate-800 object-cover"
+          />
+        )}
+
         <section className="rounded-3xl border border-slate-800 bg-slate-900/70 p-8">
           <div className="whitespace-pre-line text-base leading-8 text-slate-300">
             {article.content}

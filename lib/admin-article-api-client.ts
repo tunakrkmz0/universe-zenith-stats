@@ -96,3 +96,34 @@ export async function createAdminArticle(params: {
 
   return parseResponse<ArticleDetailResponse>(response);
 }
+
+export async function getAdminArticleById(params: {
+  adminPassword: string;
+  articleId: number;
+}): Promise<ArticleDetailResponse> {
+  const response = await fetch(`/api/admin/articles/${params.articleId}`, {
+    method: "GET",
+    headers: {
+      "x-admin-password": params.adminPassword,
+    },
+  });
+
+  return parseResponse<ArticleDetailResponse>(response);
+}
+
+export async function updateAdminArticle(params: {
+  adminPassword: string;
+  articleId: number;
+  data: CreateArticleRequest;
+}): Promise<ArticleDetailResponse> {
+  const response = await fetch(`/api/admin/articles/${params.articleId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "x-admin-password": params.adminPassword,
+    },
+    body: JSON.stringify(params.data),
+  });
+
+  return parseResponse<ArticleDetailResponse>(response);
+}
