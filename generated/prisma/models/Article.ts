@@ -41,7 +41,10 @@ export type ArticleMinAggregateOutputType = {
   category: string | null
   excerpt: string | null
   content: string | null
+  coverImageUrl: string | null
+  metaTitle: string | null
   metaDescription: string | null
+  status: string | null
   publishedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -54,7 +57,10 @@ export type ArticleMaxAggregateOutputType = {
   category: string | null
   excerpt: string | null
   content: string | null
+  coverImageUrl: string | null
+  metaTitle: string | null
   metaDescription: string | null
+  status: string | null
   publishedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -67,7 +73,10 @@ export type ArticleCountAggregateOutputType = {
   category: number
   excerpt: number
   content: number
+  coverImageUrl: number
+  metaTitle: number
   metaDescription: number
+  status: number
   publishedAt: number
   createdAt: number
   updatedAt: number
@@ -90,7 +99,10 @@ export type ArticleMinAggregateInputType = {
   category?: true
   excerpt?: true
   content?: true
+  coverImageUrl?: true
+  metaTitle?: true
   metaDescription?: true
+  status?: true
   publishedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -103,7 +115,10 @@ export type ArticleMaxAggregateInputType = {
   category?: true
   excerpt?: true
   content?: true
+  coverImageUrl?: true
+  metaTitle?: true
   metaDescription?: true
+  status?: true
   publishedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -116,7 +131,10 @@ export type ArticleCountAggregateInputType = {
   category?: true
   excerpt?: true
   content?: true
+  coverImageUrl?: true
+  metaTitle?: true
   metaDescription?: true
+  status?: true
   publishedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -216,7 +234,10 @@ export type ArticleGroupByOutputType = {
   category: string
   excerpt: string | null
   content: string
+  coverImageUrl: string | null
+  metaTitle: string | null
   metaDescription: string | null
+  status: string
   publishedAt: Date | null
   createdAt: Date
   updatedAt: Date
@@ -252,7 +273,10 @@ export type ArticleWhereInput = {
   category?: Prisma.StringFilter<"Article"> | string
   excerpt?: Prisma.StringNullableFilter<"Article"> | string | null
   content?: Prisma.StringFilter<"Article"> | string
+  coverImageUrl?: Prisma.StringNullableFilter<"Article"> | string | null
+  metaTitle?: Prisma.StringNullableFilter<"Article"> | string | null
   metaDescription?: Prisma.StringNullableFilter<"Article"> | string | null
+  status?: Prisma.StringFilter<"Article"> | string
   publishedAt?: Prisma.DateTimeNullableFilter<"Article"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Article"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Article"> | Date | string
@@ -265,7 +289,10 @@ export type ArticleOrderByWithRelationInput = {
   category?: Prisma.SortOrder
   excerpt?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.SortOrder
+  coverImageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  metaTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   metaDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -281,7 +308,10 @@ export type ArticleWhereUniqueInput = Prisma.AtLeast<{
   category?: Prisma.StringFilter<"Article"> | string
   excerpt?: Prisma.StringNullableFilter<"Article"> | string | null
   content?: Prisma.StringFilter<"Article"> | string
+  coverImageUrl?: Prisma.StringNullableFilter<"Article"> | string | null
+  metaTitle?: Prisma.StringNullableFilter<"Article"> | string | null
   metaDescription?: Prisma.StringNullableFilter<"Article"> | string | null
+  status?: Prisma.StringFilter<"Article"> | string
   publishedAt?: Prisma.DateTimeNullableFilter<"Article"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Article"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Article"> | Date | string
@@ -294,7 +324,10 @@ export type ArticleOrderByWithAggregationInput = {
   category?: Prisma.SortOrder
   excerpt?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.SortOrder
+  coverImageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  metaTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   metaDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -315,7 +348,10 @@ export type ArticleScalarWhereWithAggregatesInput = {
   category?: Prisma.StringWithAggregatesFilter<"Article"> | string
   excerpt?: Prisma.StringNullableWithAggregatesFilter<"Article"> | string | null
   content?: Prisma.StringWithAggregatesFilter<"Article"> | string
+  coverImageUrl?: Prisma.StringNullableWithAggregatesFilter<"Article"> | string | null
+  metaTitle?: Prisma.StringNullableWithAggregatesFilter<"Article"> | string | null
   metaDescription?: Prisma.StringNullableWithAggregatesFilter<"Article"> | string | null
+  status?: Prisma.StringWithAggregatesFilter<"Article"> | string
   publishedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Article"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Article"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Article"> | Date | string
@@ -327,7 +363,10 @@ export type ArticleCreateInput = {
   category: string
   excerpt?: string | null
   content: string
+  coverImageUrl?: string | null
+  metaTitle?: string | null
   metaDescription?: string | null
+  status?: string
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -340,7 +379,10 @@ export type ArticleUncheckedCreateInput = {
   category: string
   excerpt?: string | null
   content: string
+  coverImageUrl?: string | null
+  metaTitle?: string | null
   metaDescription?: string | null
+  status?: string
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -352,7 +394,10 @@ export type ArticleUpdateInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -365,7 +410,10 @@ export type ArticleUncheckedUpdateInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -378,7 +426,10 @@ export type ArticleCreateManyInput = {
   category: string
   excerpt?: string | null
   content: string
+  coverImageUrl?: string | null
+  metaTitle?: string | null
   metaDescription?: string | null
+  status?: string
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -390,7 +441,10 @@ export type ArticleUpdateManyMutationInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -403,7 +457,10 @@ export type ArticleUncheckedUpdateManyInput = {
   category?: Prisma.StringFieldUpdateOperationsInput | string
   excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metaTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metaDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -416,7 +473,10 @@ export type ArticleCountOrderByAggregateInput = {
   category?: Prisma.SortOrder
   excerpt?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  coverImageUrl?: Prisma.SortOrder
+  metaTitle?: Prisma.SortOrder
   metaDescription?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -433,7 +493,10 @@ export type ArticleMaxOrderByAggregateInput = {
   category?: Prisma.SortOrder
   excerpt?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  coverImageUrl?: Prisma.SortOrder
+  metaTitle?: Prisma.SortOrder
   metaDescription?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -446,7 +509,10 @@ export type ArticleMinOrderByAggregateInput = {
   category?: Prisma.SortOrder
   excerpt?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  coverImageUrl?: Prisma.SortOrder
+  metaTitle?: Prisma.SortOrder
   metaDescription?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -465,7 +531,10 @@ export type ArticleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   category?: boolean
   excerpt?: boolean
   content?: boolean
+  coverImageUrl?: boolean
+  metaTitle?: boolean
   metaDescription?: boolean
+  status?: boolean
   publishedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -478,7 +547,10 @@ export type ArticleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   category?: boolean
   excerpt?: boolean
   content?: boolean
+  coverImageUrl?: boolean
+  metaTitle?: boolean
   metaDescription?: boolean
+  status?: boolean
   publishedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -491,7 +563,10 @@ export type ArticleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   category?: boolean
   excerpt?: boolean
   content?: boolean
+  coverImageUrl?: boolean
+  metaTitle?: boolean
   metaDescription?: boolean
+  status?: boolean
   publishedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -504,13 +579,16 @@ export type ArticleSelectScalar = {
   category?: boolean
   excerpt?: boolean
   content?: boolean
+  coverImageUrl?: boolean
+  metaTitle?: boolean
   metaDescription?: boolean
+  status?: boolean
   publishedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ArticleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "category" | "excerpt" | "content" | "metaDescription" | "publishedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["article"]>
+export type ArticleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "category" | "excerpt" | "content" | "coverImageUrl" | "metaTitle" | "metaDescription" | "status" | "publishedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["article"]>
 
 export type $ArticlePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Article"
@@ -522,7 +600,10 @@ export type $ArticlePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     category: string
     excerpt: string | null
     content: string
+    coverImageUrl: string | null
+    metaTitle: string | null
     metaDescription: string | null
+    status: string
     publishedAt: Date | null
     createdAt: Date
     updatedAt: Date
@@ -955,7 +1036,10 @@ export interface ArticleFieldRefs {
   readonly category: Prisma.FieldRef<"Article", 'String'>
   readonly excerpt: Prisma.FieldRef<"Article", 'String'>
   readonly content: Prisma.FieldRef<"Article", 'String'>
+  readonly coverImageUrl: Prisma.FieldRef<"Article", 'String'>
+  readonly metaTitle: Prisma.FieldRef<"Article", 'String'>
   readonly metaDescription: Prisma.FieldRef<"Article", 'String'>
+  readonly status: Prisma.FieldRef<"Article", 'String'>
   readonly publishedAt: Prisma.FieldRef<"Article", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Article", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Article", 'DateTime'>

@@ -130,7 +130,10 @@ export const ArticleScalarFieldEnum = {
   category: 'category',
   excerpt: 'excerpt',
   content: 'content',
+  coverImageUrl: 'coverImageUrl',
+  metaTitle: 'metaTitle',
   metaDescription: 'metaDescription',
+  status: 'status',
   publishedAt: 'publishedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
