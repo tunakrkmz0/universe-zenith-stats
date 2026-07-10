@@ -83,6 +83,9 @@ export default function RootLayout({
                 <Link href="/terms" className="transition hover:text-cyan-300">
                   Şartlar
                 </Link>
+                <Link href="/guides" className="transition hover:text-cyan-300">
+                  Rehberler
+                </Link>
 
                 <a
                   href="https://universezenith.com"
