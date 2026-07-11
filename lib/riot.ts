@@ -8,6 +8,15 @@ export type RiotAccountDto = {
   tagLine: string;
 };
 
+export type RiotSummonerDto = {
+  id: string;
+  accountId: string;
+  puuid: string;
+  profileIconId: number;
+  revisionDate: number;
+  summonerLevel: number;
+};
+
 export type RiotMatchId = string;
 
 export type RiotServiceErrorCode =
@@ -132,4 +141,14 @@ export async function getMatchDetailByMatchId(params: {
   const url = `https://${regionalRoutingValue}.api.riotgames.com/lol/match/v5/matches/${matchId}`;
 
   return riotFetch<unknown>(url);
+}
+
+export async function getSummonerByPuuid(params: {
+  puuid: string;
+  region: LolRegion;
+}): Promise<RiotSummonerDto> {
+  const puuid = encodeURIComponent(params.puuid);
+  const url = `https://${params.region}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${puuid}`;
+
+  return riotFetch<RiotSummonerDto>(url);
 }

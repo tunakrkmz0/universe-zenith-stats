@@ -25,6 +25,7 @@ export async function saveLolAnalysisResult(analysis: LolAnalysisResponse) {
       riotGameName: analysis.player.gameName,
       riotTagLine: analysis.player.tagLine,
       region: analysis.player.region,
+      profileIconId: analysis.player.profileIconId ?? null,
       lastFetchedAt: new Date(),
     },
     create: {
@@ -32,6 +33,7 @@ export async function saveLolAnalysisResult(analysis: LolAnalysisResponse) {
       riotTagLine: analysis.player.tagLine,
       puuid: playerPuuid,
       region: analysis.player.region,
+      profileIconId: analysis.player.profileIconId ?? null,
       lastFetchedAt: new Date(),
     },
   });

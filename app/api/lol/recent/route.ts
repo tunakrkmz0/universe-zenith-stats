@@ -9,6 +9,7 @@ type RecentPlayerRecord = {
   riotTagLine: string;
   region: string;
   puuid: string;
+  profileIconId: number | null;
   lastFetchedAt: Date | null;
   updatedAt: Date;
   _count: {
@@ -29,6 +30,7 @@ export async function GET() {
         riotTagLine: true,
         region: true,
         puuid: true,
+        profileIconId: true,
         lastFetchedAt: true,
         updatedAt: true,
         _count: {
@@ -46,6 +48,7 @@ export async function GET() {
         tagLine: player.riotTagLine,
         region: player.region,
         puuid: player.puuid,
+        profileIconId: player.profileIconId,
         analyzedMatchCount: player._count.matchStats,
         lastFetchedAt: player.lastFetchedAt,
         updatedAt: player.updatedAt,

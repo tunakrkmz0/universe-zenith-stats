@@ -79,6 +79,7 @@ export const PlayerScalarFieldEnum = {
   riotTagLine: 'riotTagLine',
   puuid: 'puuid',
   region: 'region',
+  profileIconId: 'profileIconId',
   lastFetchedAt: 'lastFetchedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

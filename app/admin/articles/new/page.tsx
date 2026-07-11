@@ -63,8 +63,24 @@ export default function NewAdminArticlePage() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    setIsSubmitting(true);
     setErrorMessage("");
+
+    if (title.trim().length < 2) {
+      setErrorMessage("Başlık en az 2 karakter olmalı.");
+      return;
+    }
+
+    if (slug.trim().length < 2) {
+      setErrorMessage("Slug en az 2 karakter olmalı.");
+      return;
+    }
+
+    if (content.trim().length < 10) {
+      setErrorMessage("İçerik en az 10 karakter olmalı.");
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
       const adminPassword = localStorage.getItem(ADMIN_PASSWORD_STORAGE_KEY);
@@ -135,6 +151,7 @@ export default function NewAdminArticlePage() {
               onChange={(event) => handleTitleChange(event.target.value)}
               className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none transition focus:border-cyan-400"
               placeholder="Örn: Ahri Başlangıç Rehberi"
+              minLength={2}
               required
             />
           </div>
@@ -148,6 +165,7 @@ export default function NewAdminArticlePage() {
               onChange={(event) => setSlug(createSlug(event.target.value))}
               className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none transition focus:border-cyan-400"
               placeholder="ahri-baslangic-rehberi"
+              minLength={2}
               required
             />
           </div>
@@ -212,6 +230,7 @@ export default function NewAdminArticlePage() {
               rows={12}
               className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none transition focus:border-cyan-400"
               placeholder="Yazının ana içeriği."
+              minLength={10}
               required
             />
           </div>

@@ -151,6 +151,7 @@ export async function GET(
         tagLine: player.riotTagLine,
         region: player.region,
         puuid: player.puuid,
+        profileIconId: player.profileIconId,
         lastFetchedAt: player.lastFetchedAt,
         createdAt: player.createdAt,
         updatedAt: player.updatedAt,

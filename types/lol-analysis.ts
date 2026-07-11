@@ -11,6 +11,7 @@ export type LolAnalysisPlayer = {
   tagLine: string;
   region: LolRegion;
   puuid?: string;
+  profileIconId?: number | null;
 };
 
 export type LolAnalysisSummary = {
@@ -77,6 +78,7 @@ export type LolRecentPlayer = {
   tagLine: string;
   region: string;
   puuid: string;
+  profileIconId: number | null;
   analyzedMatchCount: number;
   lastFetchedAt: string | Date | null;
   updatedAt: string | Date;
@@ -92,6 +94,7 @@ export type LolPlayerDetailPlayer = {
   tagLine: string;
   region: string;
   puuid: string;
+  profileIconId: number | null;
   lastFetchedAt: string | Date | null;
   createdAt: string | Date;
   updatedAt: string | Date;

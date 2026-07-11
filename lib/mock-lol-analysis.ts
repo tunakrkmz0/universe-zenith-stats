@@ -112,6 +112,7 @@ export const mockLolAnalysisResponse: LolAnalysisResponse = {
     tagLine: "TR1",
     region: "tr1",
     puuid: mockPlayerPuuid,
+    profileIconId: 29,
   },
   summary,
   matches,

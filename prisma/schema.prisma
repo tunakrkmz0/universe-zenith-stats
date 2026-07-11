@@ -13,6 +13,7 @@ model Player {
   riotTagLine   String
   puuid         String    @unique
   region        String    @default("tr1")
+  profileIconId Int?
   lastFetchedAt DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt

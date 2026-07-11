@@ -25,11 +25,11 @@ type ArticleCreateRecord = ArticleListRecord & {
 };
 
 const createArticleSchema = z.object({
-  title: z.string().min(2),
-  slug: z.string().min(2),
+  title: z.string().trim().min(2, "Başlık en az 2 karakter olmalı."),
+  slug: z.string().trim().min(2, "Slug en az 2 karakter olmalı."),
   category: z.enum(["champion", "item", "guide", "patch", "news"]),
   excerpt: z.string().optional().nullable(),
-  content: z.string().min(10),
+  content: z.string().trim().min(10, "İçerik en az 10 karakter olmalı."),
   coverImageUrl: z.string().optional().nullable(),
   metaTitle: z.string().optional().nullable(),
   metaDescription: z.string().optional().nullable(),
@@ -125,11 +125,13 @@ export async function POST(request: Request) {
     const parsed = createArticleSchema.safeParse(body);
 
     if (!parsed.success) {
+      const firstError = parsed.error.issues[0];
+
       return NextResponse.json(
         {
           error: {
             code: "VALIDATION_ERROR",
-            message: "Yazı verisi geçersiz.",
+            message: firstError?.message ?? "Yazı verisi geçersiz.",
           },
         },
         { status: 400 }

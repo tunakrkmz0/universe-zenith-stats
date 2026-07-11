@@ -15,6 +15,7 @@ import {
   getMatchDetailByMatchId,
   getMatchIdsByPuuid,
   getRiotAccountByRiotId,
+  getSummonerByPuuid,
 } from "@/lib/riot";
 
 function isAnalysisMatch(
@@ -31,6 +32,18 @@ export async function analyzeLolPlayer(
     tagLine: request.tagLine,
     region: request.region,
   });
+
+  let profileIconId: number | null = null;
+
+  try {
+    const summoner = await getSummonerByPuuid({
+      puuid: account.puuid,
+      region: request.region,
+    });
+    profileIconId = summoner.profileIconId;
+  } catch (error) {
+    console.warn("RIOT_PROFILE_ICON_FETCH_FAILED:", error);
+  }
 
   const matchIds = await getMatchIdsByPuuid({
     puuid: account.puuid,
@@ -65,6 +78,7 @@ export async function analyzeLolPlayer(
       tagLine: account.tagLine,
       region: request.region,
       puuid: account.puuid,
+      profileIconId,
     },
     summary,
     matches,

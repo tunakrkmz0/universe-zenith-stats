@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+
+import { SiteNavigation } from "@/components/site-navigation";
 
 import "./globals.css";
 
@@ -57,43 +60,32 @@ export default function RootLayout({
     <html lang="tr">
       <body className="bg-slate-950 text-slate-100 antialiased">
         <div className="min-h-screen bg-slate-950">
-          <header className="border-b border-slate-800 bg-slate-950/90">
-            <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
-              <Link href="/" className="flex flex-col">
-                <span className="text-lg font-bold tracking-tight text-slate-100">
-                  Universe Zenith Stats
+          <header className="sticky top-0 z-50 border-b border-[#806b3a]/35 bg-[#020713]/85 backdrop-blur-xl">
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#c89b3c]/70 to-transparent" />
+            <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-5 px-4 py-4 sm:px-6">
+              <Link href="/" className="group flex items-center gap-3">
+                <span className="relative size-11 shrink-0 overflow-hidden rounded-full border border-[#c89b3c] bg-[#071525] p-0.5 shadow-[0_0_24px_rgba(73,201,232,0.1)] transition group-hover:border-[#7ee7f2] group-hover:shadow-[0_0_28px_rgba(73,201,232,0.2)]">
+                  <Image
+                    src="/images/universe-zenith-logo.jpeg"
+                    alt=""
+                    fill
+                    sizes="44px"
+                    className="rounded-full object-cover"
+                  />
+                  <span className="absolute -bottom-0.5 size-1.5 rotate-45 bg-[#49c9e8] shadow-[0_0_8px_#49c9e8]" />
                 </span>
-                <span className="text-xs text-slate-500">
-                  League of Legends Analysis
+
+                <span className="flex flex-col">
+                  <span className="text-base font-black tracking-tight text-[#f0e6d2] transition group-hover:text-white sm:text-lg">
+                    Universe Zenith
+                  </span>
+                  <span className="text-[0.6rem] font-bold uppercase tracking-[0.24em] text-[#6f8498]">
+                    League Intelligence
+                  </span>
                 </span>
               </Link>
 
-              <nav className="flex items-center gap-4 text-sm text-slate-400">
-                <Link
-                  href="/"
-                  className="transition hover:text-cyan-300"
-                >
-                  Analiz
-                </Link>
-
-                <Link href="/privacy" className="transition hover:text-cyan-300">
-                  Gizlilik
-                </Link>
-
-                <Link href="/terms" className="transition hover:text-cyan-300">
-                  Şartlar
-                </Link>
-                <Link href="/guides" className="transition hover:text-cyan-300">
-                  Rehberler
-                </Link>
-
-                <a
-                  href="https://universezenith.com"
-                  className="transition hover:text-cyan-300"
-                >
-                  universezenith.com
-                </a>
-              </nav>
+              <SiteNavigation />
             </div>
           </header>
 

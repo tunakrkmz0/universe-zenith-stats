@@ -28,10 +28,12 @@ export type AggregatePlayer = {
 
 export type PlayerAvgAggregateOutputType = {
   id: number | null
+  profileIconId: number | null
 }
 
 export type PlayerSumAggregateOutputType = {
   id: number | null
+  profileIconId: number | null
 }
 
 export type PlayerMinAggregateOutputType = {
@@ -40,6 +42,7 @@ export type PlayerMinAggregateOutputType = {
   riotTagLine: string | null
   puuid: string | null
   region: string | null
+  profileIconId: number | null
   lastFetchedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -51,6 +54,7 @@ export type PlayerMaxAggregateOutputType = {
   riotTagLine: string | null
   puuid: string | null
   region: string | null
+  profileIconId: number | null
   lastFetchedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -62,6 +66,7 @@ export type PlayerCountAggregateOutputType = {
   riotTagLine: number
   puuid: number
   region: number
+  profileIconId: number
   lastFetchedAt: number
   createdAt: number
   updatedAt: number
@@ -71,10 +76,12 @@ export type PlayerCountAggregateOutputType = {
 
 export type PlayerAvgAggregateInputType = {
   id?: true
+  profileIconId?: true
 }
 
 export type PlayerSumAggregateInputType = {
   id?: true
+  profileIconId?: true
 }
 
 export type PlayerMinAggregateInputType = {
@@ -83,6 +90,7 @@ export type PlayerMinAggregateInputType = {
   riotTagLine?: true
   puuid?: true
   region?: true
+  profileIconId?: true
   lastFetchedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -94,6 +102,7 @@ export type PlayerMaxAggregateInputType = {
   riotTagLine?: true
   puuid?: true
   region?: true
+  profileIconId?: true
   lastFetchedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -105,6 +114,7 @@ export type PlayerCountAggregateInputType = {
   riotTagLine?: true
   puuid?: true
   region?: true
+  profileIconId?: true
   lastFetchedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -203,6 +213,7 @@ export type PlayerGroupByOutputType = {
   riotTagLine: string
   puuid: string
   region: string
+  profileIconId: number | null
   lastFetchedAt: Date | null
   createdAt: Date
   updatedAt: Date
@@ -237,6 +248,7 @@ export type PlayerWhereInput = {
   riotTagLine?: Prisma.StringFilter<"Player"> | string
   puuid?: Prisma.StringFilter<"Player"> | string
   region?: Prisma.StringFilter<"Player"> | string
+  profileIconId?: Prisma.IntNullableFilter<"Player"> | number | null
   lastFetchedAt?: Prisma.DateTimeNullableFilter<"Player"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Player"> | Date | string
@@ -249,6 +261,7 @@ export type PlayerOrderByWithRelationInput = {
   riotTagLine?: Prisma.SortOrder
   puuid?: Prisma.SortOrder
   region?: Prisma.SortOrder
+  profileIconId?: Prisma.SortOrderInput | Prisma.SortOrder
   lastFetchedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -264,6 +277,7 @@ export type PlayerWhereUniqueInput = Prisma.AtLeast<{
   riotGameName?: Prisma.StringFilter<"Player"> | string
   riotTagLine?: Prisma.StringFilter<"Player"> | string
   region?: Prisma.StringFilter<"Player"> | string
+  profileIconId?: Prisma.IntNullableFilter<"Player"> | number | null
   lastFetchedAt?: Prisma.DateTimeNullableFilter<"Player"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Player"> | Date | string
@@ -276,6 +290,7 @@ export type PlayerOrderByWithAggregationInput = {
   riotTagLine?: Prisma.SortOrder
   puuid?: Prisma.SortOrder
   region?: Prisma.SortOrder
+  profileIconId?: Prisma.SortOrderInput | Prisma.SortOrder
   lastFetchedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -295,6 +310,7 @@ export type PlayerScalarWhereWithAggregatesInput = {
   riotTagLine?: Prisma.StringWithAggregatesFilter<"Player"> | string
   puuid?: Prisma.StringWithAggregatesFilter<"Player"> | string
   region?: Prisma.StringWithAggregatesFilter<"Player"> | string
+  profileIconId?: Prisma.IntNullableWithAggregatesFilter<"Player"> | number | null
   lastFetchedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Player"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Player"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Player"> | Date | string
@@ -305,6 +321,7 @@ export type PlayerCreateInput = {
   riotTagLine: string
   puuid: string
   region?: string
+  profileIconId?: number | null
   lastFetchedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -317,6 +334,7 @@ export type PlayerUncheckedCreateInput = {
   riotTagLine: string
   puuid: string
   region?: string
+  profileIconId?: number | null
   lastFetchedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -328,6 +346,7 @@ export type PlayerUpdateInput = {
   riotTagLine?: Prisma.StringFieldUpdateOperationsInput | string
   puuid?: Prisma.StringFieldUpdateOperationsInput | string
   region?: Prisma.StringFieldUpdateOperationsInput | string
+  profileIconId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastFetchedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -340,6 +359,7 @@ export type PlayerUncheckedUpdateInput = {
   riotTagLine?: Prisma.StringFieldUpdateOperationsInput | string
   puuid?: Prisma.StringFieldUpdateOperationsInput | string
   region?: Prisma.StringFieldUpdateOperationsInput | string
+  profileIconId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastFetchedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -352,6 +372,7 @@ export type PlayerCreateManyInput = {
   riotTagLine: string
   puuid: string
   region?: string
+  profileIconId?: number | null
   lastFetchedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -362,6 +383,7 @@ export type PlayerUpdateManyMutationInput = {
   riotTagLine?: Prisma.StringFieldUpdateOperationsInput | string
   puuid?: Prisma.StringFieldUpdateOperationsInput | string
   region?: Prisma.StringFieldUpdateOperationsInput | string
+  profileIconId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastFetchedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -373,6 +395,7 @@ export type PlayerUncheckedUpdateManyInput = {
   riotTagLine?: Prisma.StringFieldUpdateOperationsInput | string
   puuid?: Prisma.StringFieldUpdateOperationsInput | string
   region?: Prisma.StringFieldUpdateOperationsInput | string
+  profileIconId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastFetchedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -384,6 +407,7 @@ export type PlayerCountOrderByAggregateInput = {
   riotTagLine?: Prisma.SortOrder
   puuid?: Prisma.SortOrder
   region?: Prisma.SortOrder
+  profileIconId?: Prisma.SortOrder
   lastFetchedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -391,6 +415,7 @@ export type PlayerCountOrderByAggregateInput = {
 
 export type PlayerAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  profileIconId?: Prisma.SortOrder
 }
 
 export type PlayerMaxOrderByAggregateInput = {
@@ -399,6 +424,7 @@ export type PlayerMaxOrderByAggregateInput = {
   riotTagLine?: Prisma.SortOrder
   puuid?: Prisma.SortOrder
   region?: Prisma.SortOrder
+  profileIconId?: Prisma.SortOrder
   lastFetchedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -410,6 +436,7 @@ export type PlayerMinOrderByAggregateInput = {
   riotTagLine?: Prisma.SortOrder
   puuid?: Prisma.SortOrder
   region?: Prisma.SortOrder
+  profileIconId?: Prisma.SortOrder
   lastFetchedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -417,6 +444,7 @@ export type PlayerMinOrderByAggregateInput = {
 
 export type PlayerSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  profileIconId?: Prisma.SortOrder
 }
 
 export type PlayerScalarRelationFilter = {
@@ -426,6 +454,14 @@ export type PlayerScalarRelationFilter = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -463,6 +499,7 @@ export type PlayerCreateWithoutMatchStatsInput = {
   riotTagLine: string
   puuid: string
   region?: string
+  profileIconId?: number | null
   lastFetchedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -474,6 +511,7 @@ export type PlayerUncheckedCreateWithoutMatchStatsInput = {
   riotTagLine: string
   puuid: string
   region?: string
+  profileIconId?: number | null
   lastFetchedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -500,6 +538,7 @@ export type PlayerUpdateWithoutMatchStatsInput = {
   riotTagLine?: Prisma.StringFieldUpdateOperationsInput | string
   puuid?: Prisma.StringFieldUpdateOperationsInput | string
   region?: Prisma.StringFieldUpdateOperationsInput | string
+  profileIconId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastFetchedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -511,6 +550,7 @@ export type PlayerUncheckedUpdateWithoutMatchStatsInput = {
   riotTagLine?: Prisma.StringFieldUpdateOperationsInput | string
   puuid?: Prisma.StringFieldUpdateOperationsInput | string
   region?: Prisma.StringFieldUpdateOperationsInput | string
+  profileIconId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastFetchedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -553,6 +593,7 @@ export type PlayerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   riotTagLine?: boolean
   puuid?: boolean
   region?: boolean
+  profileIconId?: boolean
   lastFetchedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -566,6 +607,7 @@ export type PlayerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   riotTagLine?: boolean
   puuid?: boolean
   region?: boolean
+  profileIconId?: boolean
   lastFetchedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -577,6 +619,7 @@ export type PlayerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   riotTagLine?: boolean
   puuid?: boolean
   region?: boolean
+  profileIconId?: boolean
   lastFetchedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -588,12 +631,13 @@ export type PlayerSelectScalar = {
   riotTagLine?: boolean
   puuid?: boolean
   region?: boolean
+  profileIconId?: boolean
   lastFetchedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PlayerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "riotGameName" | "riotTagLine" | "puuid" | "region" | "lastFetchedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["player"]>
+export type PlayerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "riotGameName" | "riotTagLine" | "puuid" | "region" | "profileIconId" | "lastFetchedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["player"]>
 export type PlayerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   matchStats?: boolean | Prisma.Player$matchStatsArgs<ExtArgs>
   _count?: boolean | Prisma.PlayerCountOutputTypeDefaultArgs<ExtArgs>
@@ -612,6 +656,7 @@ export type $PlayerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     riotTagLine: string
     puuid: string
     region: string
+    profileIconId: number | null
     lastFetchedAt: Date | null
     createdAt: Date
     updatedAt: Date
@@ -1044,6 +1089,7 @@ export interface PlayerFieldRefs {
   readonly riotTagLine: Prisma.FieldRef<"Player", 'String'>
   readonly puuid: Prisma.FieldRef<"Player", 'String'>
   readonly region: Prisma.FieldRef<"Player", 'String'>
+  readonly profileIconId: Prisma.FieldRef<"Player", 'Int'>
   readonly lastFetchedAt: Prisma.FieldRef<"Player", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Player", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Player", 'DateTime'>
