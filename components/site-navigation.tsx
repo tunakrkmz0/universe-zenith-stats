@@ -55,17 +55,6 @@ export function SiteNavigation() {
         );
       })}
 
-      <span className="mx-2 hidden h-5 w-px bg-[#29465e] sm:block" />
-
-      <a
-        href="https://universezenith.com"
-        target="_blank"
-        rel="noreferrer"
-        className="hidden items-center gap-2 border border-[#806b3a]/70 px-3 py-2 text-xs font-bold uppercase tracking-wider text-[#c8aa6e] transition hover:border-[#49c9e8] hover:text-[#7ee7f2] sm:flex"
-      >
-        Ana Site
-        <span aria-hidden="true">↗</span>
-      </a>
     </nav>
   );
 }

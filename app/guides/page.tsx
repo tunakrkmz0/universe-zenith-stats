@@ -19,7 +19,7 @@ export default async function GuidesPage() {
       status: "published",
     },
     orderBy: {
-      publishedAt: "desc",
+      title: "asc",
     },
     select: {
       id: true,

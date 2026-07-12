@@ -62,16 +62,17 @@ export default function AdminArticlesLayout({
 
   if (isChecking || errorMessage) {
     return (
-      <main className="text-slate-100">
+      <main className="relative isolate overflow-hidden text-slate-100">
+        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(8,145,178,0.12),transparent_35%)]" />
         <section className="mx-auto flex min-h-[70vh] w-full max-w-md flex-col justify-center px-6 py-10">
-          <div className="rounded-3xl border border-slate-800 bg-slate-900/70 p-8">
-            <p className="text-sm uppercase tracking-[0.25em] text-slate-500">
-              Universe Zenith Stats
+          <div className="relative border border-[#29465e]/60 bg-[#06101e]/85 p-8 shadow-[0_30px_80px_rgba(0,0,0,0.4)]">
+            <span className="absolute -left-px -top-px size-8 border-l border-t border-[#c89b3c]" />
+            <p className="text-xs font-black uppercase tracking-[0.28em] text-[#c8aa6e]">
+              Güvenlik protokolü
             </p>
-
-            <h1 className="mt-2 text-3xl font-bold">Admin Kontrolü</h1>
-
-            <p className="mt-4 text-sm leading-6 text-slate-400">
+            <h1 className="mt-3 text-3xl font-black text-[#f0e6d2]">Erişim Kontrolü</h1>
+            {!errorMessage && <span className="mt-6 block size-5 animate-spin rounded-full border-2 border-[#29465e] border-t-[#49c9e8]" />}
+            <p className={`mt-4 text-sm leading-6 ${errorMessage ? "text-rose-200" : "text-[#8295a8]"}`}>
               {errorMessage || "Admin oturumu kontrol ediliyor..."}
             </p>
           </div>
