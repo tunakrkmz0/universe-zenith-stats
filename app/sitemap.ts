@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { prisma } from "@/lib/prisma";
 
-const siteUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+const siteUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://universezenith.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
@@ -34,16 +34,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily",
       priority: 0.8,
     },
-  ];
-
-  const articleRoutes: MetadataRoute.Sitemap = articles.map((article) => ({
-    url: `${siteUrl}/guides/${article.slug}`,
-    lastModified: article.updatedAt ?? article.publishedAt ?? now,
-    changeFrequency: "weekly",
-    priority: 0.7,
-  }));
-
-  const legalRoutes: MetadataRoute.Sitemap = [
     {
       url: `${siteUrl}/privacy`,
       lastModified: now,
@@ -58,5 +48,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  return [...staticRoutes, ...articleRoutes, ...legalRoutes];
+  const articleRoutes: MetadataRoute.Sitemap = articles.map((article) => ({
+    url: `${siteUrl}/guides/${article.slug}`,
+    lastModified: article.updatedAt ?? article.publishedAt ?? now,
+    changeFrequency: "weekly",
+    priority: 0.7,
+  }));
+
+  return [...staticRoutes, ...articleRoutes];
 }
