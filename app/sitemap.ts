@@ -1,18 +1,49 @@
 import type { MetadataRoute } from "next";
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+import { prisma } from "@/lib/prisma";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+const siteUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  return [
+  const articles = await prisma.article.findMany({
+    where: {
+      status: "published",
+    },
+    select: {
+      slug: true,
+      publishedAt: true,
+      updatedAt: true,
+    },
+    orderBy: {
+      publishedAt: "desc",
+    },
+  });
+
+  const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: siteUrl,
       lastModified: now,
       changeFrequency: "daily",
       priority: 1,
     },
+    {
+      url: `${siteUrl}/guides`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.8,
+    },
+  ];
+
+  const articleRoutes: MetadataRoute.Sitemap = articles.map((article) => ({
+    url: `${siteUrl}/guides/${article.slug}`,
+    lastModified: article.updatedAt ?? article.publishedAt ?? now,
+    changeFrequency: "weekly",
+    priority: 0.7,
+  }));
+
+  const legalRoutes: MetadataRoute.Sitemap = [
     {
       url: `${siteUrl}/privacy`,
       lastModified: now,
@@ -26,4 +57,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
     },
   ];
+
+  return [...staticRoutes, ...articleRoutes, ...legalRoutes];
 }

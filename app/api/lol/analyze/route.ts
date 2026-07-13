@@ -43,6 +43,19 @@ function createMockPuuid(params: {
   return `mock:${params.region}:${gameName}:${tagLine}`;
 }
 
+function attachPlayerId(params: {
+  response: LolAnalysisResponse;
+  playerId: number;
+}): LolAnalysisResponse {
+  return {
+    ...params.response,
+    player: {
+      ...params.response.player,
+      id: params.playerId,
+    },
+  };
+}
+
 export async function GET() {
   return NextResponse.json(mockLolAnalysisResponse, { status: 200 });
 }
@@ -78,9 +91,13 @@ export async function POST(request: Request) {
         },
       };
 
-      await saveLolAnalysisResult(response);
+      const savedResult = await saveLolAnalysisResult(response);
+      const responseWithPlayerId = attachPlayerId({
+        response,
+        playerId: savedResult.playerId,
+      });
 
-      return NextResponse.json(response, { status: 200 });
+      return NextResponse.json(responseWithPlayerId, { status: 200 });
     }
 
     const response = await analyzeLolPlayer({
@@ -89,9 +106,13 @@ export async function POST(request: Request) {
       region,
     });
 
-    await saveLolAnalysisResult(response);
+    const savedResult = await saveLolAnalysisResult(response);
+    const responseWithPlayerId = attachPlayerId({
+      response,
+      playerId: savedResult.playerId,
+    });
 
-    return NextResponse.json(response, { status: 200 });
+    return NextResponse.json(responseWithPlayerId, { status: 200 });
   } catch (error) {
     console.error("LOL_ANALYZE_API_ERROR:", error);
 

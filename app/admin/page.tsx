@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import {
@@ -16,14 +16,6 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isChecking, setIsChecking] = useState(false);
-
-  useEffect(() => {
-    const storedPassword = localStorage.getItem(ADMIN_PASSWORD_STORAGE_KEY);
-
-    if (storedPassword) {
-      setPassword(storedPassword);
-    }
-  }, []);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -72,27 +64,43 @@ export default function AdminLoginPage() {
 
           <div className="flex items-center gap-4">
             <div className="grid size-14 shrink-0 rotate-45 place-items-center border border-[#806b3a] bg-[#0b2638] shadow-[0_0_28px_rgba(73,201,232,0.12)]">
-              <span className="-rotate-45 text-2xl text-[#7ee7f2]" aria-hidden="true">◇</span>
+              <span
+                className="-rotate-45 text-2xl text-[#7ee7f2]"
+                aria-hidden="true"
+              >
+                ◇
+              </span>
             </div>
+
             <div>
-              <p className="text-[0.65rem] font-black uppercase tracking-[0.32em] text-[#c8aa6e]">Yetkili erişim</p>
-              <h1 className="mt-1 text-3xl font-black text-[#f0e6d2]">Komuta Merkezi</h1>
+              <p className="text-[0.65rem] font-black uppercase tracking-[0.32em] text-[#c8aa6e]">
+                Yetkili erişim
+              </p>
+
+              <h1 className="mt-1 text-3xl font-black text-[#f0e6d2]">
+                Komuta Merkezi
+              </h1>
             </div>
           </div>
 
           <p className="mt-7 border-l border-[#29465e] pl-4 text-sm leading-7 text-[#8295a8]">
-            Universe Zenith içerik arşivini yönetmek için yönetici anahtarını kullan.
+            Universe Zenith içerik arşivini yönetmek için yönetici anahtarını
+            kullan.
           </p>
 
           {errorMessage && (
             <div className="mt-6 flex gap-3 border border-rose-500/40 bg-rose-950/40 px-4 py-3 text-sm text-rose-200">
-              <span aria-hidden="true">!</span><span>{errorMessage}</span>
+              <span aria-hidden="true">!</span>
+              <span>{errorMessage}</span>
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-5">
             <div>
-              <label htmlFor="admin-password" className="mb-2 block text-xs font-black uppercase tracking-[0.18em] text-[#c8aa6e]">
+              <label
+                htmlFor="admin-password"
+                className="mb-2 block text-xs font-black uppercase tracking-[0.18em] text-[#c8aa6e]"
+              >
                 Yönetici anahtarı
               </label>
 
@@ -112,13 +120,23 @@ export default function AdminLoginPage() {
               disabled={isChecking}
               className="group flex min-h-14 items-center justify-center gap-3 border border-[#f0d58a] bg-gradient-to-b from-[#27a8c7] via-[#14758f] to-[#0a4a61] px-6 py-4 text-sm font-black uppercase tracking-[0.16em] text-white shadow-[inset_0_0_0_1px_rgba(5,24,38,0.8),0_0_28px_rgba(73,201,232,0.2)] transition hover:brightness-125 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {isChecking && <span className="size-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />}
+              {isChecking && (
+                <span className="size-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+              )}
+
               {isChecking ? "Erişim doğrulanıyor" : "Panele giriş yap"}
-              {!isChecking && <span className="text-lg transition group-hover:translate-x-1">→</span>}
+
+              {!isChecking && (
+                <span className="text-lg transition group-hover:translate-x-1">
+                  →
+                </span>
+              )}
             </button>
           </form>
 
-          <p className="mt-6 text-center text-[0.65rem] uppercase tracking-[0.2em] text-[#526a7f]">Korumalı yönetim alanı</p>
+          <p className="mt-6 text-center text-[0.65rem] uppercase tracking-[0.2em] text-[#526a7f]">
+            Korumalı yönetim alanı
+          </p>
         </div>
       </section>
     </main>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import {
   AdminArticleApiError,
@@ -43,7 +43,7 @@ export default function AdminArticlesPage() {
   );
   const [errorMessage, setErrorMessage] = useState("");
 
-  async function loadArticles() {
+  const loadArticles = useCallback(async function loadArticles() {
     setIsLoading(true);
     setErrorMessage("");
 
@@ -66,7 +66,7 @@ export default function AdminArticlesPage() {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, []);
 
   async function handleDeleteArticle(article: ArticleListItem) {
     const confirmed = window.confirm(
@@ -108,23 +108,37 @@ export default function AdminArticlesPage() {
   }
 
   useEffect(() => {
-    void loadArticles();
-  }, []);
+    const timerId = window.setTimeout(() => {
+      void loadArticles();
+    }, 0);
 
-  const publishedCount = articles.filter((article) => article.status === "published").length;
+    return () => {
+      window.clearTimeout(timerId);
+    };
+  }, [loadArticles]);
+
+  const publishedCount = articles.filter(
+    (article) => article.status === "published"
+  ).length;
   const draftCount = articles.length - publishedCount;
 
   return (
     <main className="relative isolate min-h-screen overflow-hidden text-slate-100">
       <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(circle_at_10%_10%,rgba(8,145,178,0.12),transparent_25%),radial-gradient(circle_at_90%_35%,rgba(190,121,35,0.1),transparent_30%)]" />
+
       <section className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-12">
         <div className="relative flex flex-col justify-between gap-7 border border-[#29465e]/60 bg-[#06101e]/80 p-7 shadow-[0_24px_70px_rgba(0,0,0,0.3)] md:flex-row md:items-center md:p-9">
           <span className="absolute -left-px -top-px size-8 border-l border-t border-[#c89b3c]" />
+
           <div>
             <p className="text-xs font-black uppercase tracking-[0.3em] text-[#c8aa6e]">
               Komuta merkezi
             </p>
-            <h1 className="mt-3 text-4xl font-black text-[#f0e6d2] sm:text-5xl">İçerik Arşivi</h1>
+
+            <h1 className="mt-3 text-4xl font-black text-[#f0e6d2] sm:text-5xl">
+              İçerik Arşivi
+            </h1>
+
             <p className="mt-3 text-[#8295a8]">
               Rehber, şampiyon, eşya, yama ve haber içeriklerini yönet.
             </p>
@@ -155,9 +169,19 @@ export default function AdminArticlesPage() {
               ["Yayında", publishedCount, "text-emerald-300"],
               ["Taslak", draftCount, "text-amber-200"],
             ].map(([label, value, color], index) => (
-              <div key={label} className={`px-4 py-5 text-center ${index > 0 ? "border-l border-[#29465e]/50" : ""}`}>
-                <p className={`text-2xl font-black sm:text-3xl ${color}`}>{value}</p>
-                <p className="mt-1 text-[0.6rem] font-black uppercase tracking-[0.2em] text-[#6f8498]">{label}</p>
+              <div
+                key={label}
+                className={`px-4 py-5 text-center ${
+                  index > 0 ? "border-l border-[#29465e]/50" : ""
+                }`}
+              >
+                <p className={`text-2xl font-black sm:text-3xl ${color}`}>
+                  {value}
+                </p>
+
+                <p className="mt-1 text-[0.6rem] font-black uppercase tracking-[0.2em] text-[#6f8498]">
+                  {label}
+                </p>
               </div>
             ))}
           </div>
@@ -190,6 +214,7 @@ export default function AdminArticlesPage() {
                 className="group relative overflow-hidden border border-[#29465e]/55 bg-[#06101e]/75 p-6 transition hover:border-[#806b3a]/80 hover:bg-[#081522]"
               >
                 <span className="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-[#49c9e8]/60 to-transparent opacity-0 transition group-hover:opacity-100" />
+
                 <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
                   <div>
                     <div className="mb-3 flex flex-wrap items-center gap-2 text-[0.65rem] font-black uppercase tracking-wider">
@@ -241,7 +266,9 @@ export default function AdminArticlesPage() {
                       disabled={deletingArticleId === article.id}
                       className="border border-rose-500/50 px-4 py-2.5 text-xs font-black uppercase tracking-wider text-rose-300 transition hover:bg-rose-500 hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
                     >
-                      {deletingArticleId === article.id ? "Siliniyor..." : "Sil"}
+                      {deletingArticleId === article.id
+                        ? "Siliniyor..."
+                        : "Sil"}
                     </button>
                   </div>
                 </div>

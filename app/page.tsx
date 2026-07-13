@@ -12,6 +12,7 @@ import type {
   LolRegion,
 } from "@/types/lol-analysis";
 
+import { saveAnalysisToLocalRecentPlayers } from "@/lib/local-recent-lol-players";
 import { RecentPlayersPanel } from "@/components/lol/recent-players-panel";
 import { MatchHistory } from "@/components/lol/match-history";
 import { PlayerShowcase } from "@/components/lol/player-showcase";
@@ -50,6 +51,7 @@ export default function HomePage() {
 
       const result = await analyzeLolPlayer(request);
       setData(result);
+      saveAnalysisToLocalRecentPlayers(result);
       setRecentRefreshKey((value) => value + 1);
     } catch (error) {
       if (error instanceof LolApiClientError) {

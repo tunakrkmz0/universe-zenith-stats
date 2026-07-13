@@ -7,6 +7,7 @@ export type LolAnalysisRequest = {
 };
 
 export type LolAnalysisPlayer = {
+  id?: number;
   gameName: string;
   tagLine: string;
   region: LolRegion;
