@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
 
+
 import { SiteNavigation } from "@/components/site-navigation";
 
 import "./globals.css";
@@ -24,6 +25,17 @@ export default function RootLayout({
   return (
     <html lang="tr">
       <head>
+        {/* Consent Manager - mümkün olan en üstte */}
+        <Script
+          id="consentmanager"
+          strategy="beforeInteractive"
+          src="https://cdn.consentmanager.net/delivery/autoblocking/c20fb8ac9268c.js"
+          data-cmp-ab="1"
+          data-cmp-host="b.delivery.consentmanager.net"
+          data-cmp-cdn="cdn.consentmanager.net"
+          data-cmp-codesrc="16"
+        />
+
         {/* Google AdSense */}
         <Script
           id="google-adsense"
@@ -41,12 +53,12 @@ export default function RootLayout({
 
         <Script id="google-analytics" strategy="afterInteractive">
           {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-            gtag('config', 'G-6KHFEL5T4W');
-          `}
+      gtag('config', 'G-6KHFEL5T4W');
+    `}
         </Script>
       </head>
 
