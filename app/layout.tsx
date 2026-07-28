@@ -1,54 +1,19 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 
 import { SiteNavigation } from "@/components/site-navigation";
 
 import "./globals.css";
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
   title: {
-    default: "Universe Zenith Stats",
-    template: "%s | Universe Zenith Stats",
+    default: "Universe Zenith",
+    template: "%s | Universe Zenith",
   },
   description:
-    "League of Legends oyuncu istatistikleri, maç geçmişi ve performans analiz platformu.",
-  applicationName: "Universe Zenith Stats",
-  keywords: [
-    "League of Legends",
-    "LoL stats",
-    "LoL player analysis",
-    "Riot ID analysis",
-    "Universe Zenith Stats",
-  ],
-  authors: [
-    {
-      name: "Universe Zenith",
-    },
-  ],
-  openGraph: {
-    title: "Universe Zenith Stats",
-    description:
-      "League of Legends oyuncu istatistikleri, maç geçmişi ve performans analiz platformu.",
-    url: siteUrl,
-    siteName: "Universe Zenith Stats",
-    locale: "tr_TR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Universe Zenith Stats",
-    description:
-      "League of Legends oyuncu istatistikleri, maç geçmişi ve performans analiz platformu.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+    "League of Legends oyuncu analizi, maç istatistikleri ve şampiyon rehberleri.",
 };
 
 export default function RootLayout({
@@ -58,68 +23,85 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr">
+      <head>
+        {/* Google AdSense */}
+        <Script
+          id="google-adsense"
+          async
+          strategy="afterInteractive"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2050807222656315"
+          crossOrigin="anonymous"
+        />
+
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-6KHFEL5T4W"
+          strategy="afterInteractive"
+        />
+
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-6KHFEL5T4W');
+          `}
+        </Script>
+      </head>
+
       <body className="bg-slate-950 text-slate-100 antialiased">
-        <div className="min-h-screen bg-slate-950">
-          <header className="sticky top-0 z-50 border-b border-[#806b3a]/35 bg-[#020713]/85 backdrop-blur-xl">
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#c89b3c]/70 to-transparent" />
-            <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-5 px-4 py-4 sm:px-6">
-              <Link href="/" className="group flex items-center gap-3">
-                <span className="relative size-11 shrink-0 overflow-hidden rounded-full border border-[#c89b3c] bg-[#071525] p-0.5 shadow-[0_0_24px_rgba(73,201,232,0.1)] transition group-hover:border-[#7ee7f2] group-hover:shadow-[0_0_28px_rgba(73,201,232,0.2)]">
-                  <Image
-                    src="/images/universe-zenith-logo.jpeg"
-                    alt=""
-                    fill
-                    sizes="44px"
-                    className="rounded-full object-cover"
-                  />
-                  <span className="absolute -bottom-0.5 size-1.5 rotate-45 bg-[#49c9e8] shadow-[0_0_8px_#49c9e8]" />
-                </span>
+        <header className="border-b border-slate-800 bg-slate-950/90 backdrop-blur">
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-4">
+            <Link
+              href="/"
+              className="flex items-center gap-3 text-lg font-semibold tracking-wide text-slate-100"
+            >
+              <Image
+                src="/images/universe-zenith-logo.jpeg"
+                alt="Universe Zenith"
+                width={40}
+                height={40}
+                className="rounded-full"
+                priority
+              />
+              <span>Universe Zenith</span>
+            </Link>
 
-                <span className="flex flex-col">
-                  <span className="text-base font-black tracking-tight text-[#f0e6d2] transition group-hover:text-white sm:text-lg">
-                    Universe Zenith
-                  </span>
-                  <span className="text-[0.6rem] font-bold uppercase tracking-[0.24em] text-[#6f8498]">
-                    League Intelligence
-                  </span>
-                </span>
+            <SiteNavigation />
+          </div>
+        </header>
+
+        <main>{children}</main>
+
+        <footer className="border-t border-slate-800 bg-slate-950">
+          <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-sm text-slate-400 md:flex-row md:items-center md:justify-between">
+            <p>
+              © {new Date().getFullYear()} Universe Zenith. All rights reserved.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-4">
+              <Link
+                href="/privacy"
+                className="transition hover:text-slate-200"
+              >
+                Privacy Policy
               </Link>
 
-              <SiteNavigation />
-            </div>
-          </header>
-
-          {children}
-
-          <footer className="border-t border-slate-800 bg-slate-950">
-            <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-8 text-sm text-slate-500">
-              <p>
-                Universe Zenith Stats, League of Legends oyuncu istatistiklerini
-                analiz etmeye yönelik bağımsız bir platformdur.
-              </p>
-
-              <p>
-                Universe Zenith Stats, Riot Games tarafından desteklenmez ve Riot
-                Games’in resmi ürünü değildir. Riot Games ve ilişkili tüm markalar
-                Riot Games, Inc.’e aittir.
-              </p>
-
-              <p>
-                © {new Date().getFullYear()} Universe Zenith Stats. Tüm hakları
-                saklıdır.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-4">
-              <Link href="/privacy" className="transition hover:text-cyan-300">
-                Gizlilik Politikası
-              </Link>
-
-              <Link href="/terms" className="transition hover:text-cyan-300">
-                Kullanım Şartları
+              <Link href="/terms" className="transition hover:text-slate-200">
+                Terms of Service
               </Link>
             </div>
-          </footer>
-        </div>
+          </div>
+
+          <div className="mx-auto max-w-7xl px-6 pb-8 text-xs leading-6 text-slate-500">
+            Universe Zenith isn't endorsed by Riot Games and doesn't reflect the
+            views or opinions of Riot Games or anyone officially involved in
+            producing or managing Riot Games properties. Riot Games, League of
+            Legends and all associated properties are trademarks or registered
+            trademarks of Riot Games, Inc.
+          </div>
+        </footer>
       </body>
     </html>
   );
